@@ -19,19 +19,19 @@ PRODUCT_SOONG_NAMESPACES += \
 
 # Configs
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(QCOM_COMMON_PATH)/vendor/perf-legacy/configs/common,$(TARGET_COPY_OUT_VENDOR)/etc) \
-    $(call find-copy-subdir-files,*,$(QCOM_COMMON_PATH)/vendor/perf-legacy/configs/$(TARGET_BOARD_PLATFORM),$(TARGET_COPY_OUT_VENDOR)/etc)
+    $(call find-copy-subdir-files,*,device/qcom/common/vendor/perf-legacy/configs/common,$(TARGET_COPY_OUT_VENDOR)/etc) \
+    $(call find-copy-subdir-files,*,device/qcom/common/vendor/perf-legacy/configs/$(TARGET_BOARD_PLATFORM),$(TARGET_COPY_OUT_VENDOR)/etc)
 
 # Disable IOP HAL for select platforms.
 ifeq ($(call is-board-platform-in-list, msm8937 msm8953 msm8998 qcs605 sdm660 sdm710),true)
 PRODUCT_COPY_FILES += \
-    $(QCOM_COMMON_PATH)/vendor/perf-legacy/vendor.qti.hardware.iop@2.0-service-disable.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.qti.hardware.iop@2.0-service-disable.rc
+    device/qcom/common/vendor/perf-legacy/vendor.qti.hardware.iop@2.0-service-disable.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.qti.hardware.iop@2.0-service-disable.rc
 endif
 
 # Disable the poweropt service for <5.4 platforms.
 ifeq (,$(filter 5.4 5.10, $(TARGET_KERNEL_VERSION)))
 PRODUCT_COPY_FILES += \
-    $(QCOM_COMMON_PATH)/vendor/perf-legacy/poweropt-service-disable.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/poweropt-service-disable.rc
+    device/qcom/common/vendor/perf-legacy/poweropt-service-disable.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/poweropt-service-disable.rc
 endif
 
 # Packages
@@ -40,6 +40,9 @@ PRODUCT_PACKAGES += \
     libavservices_minijail.vendor \
     libpsi.vendor \
     libtflite \
+    vendor.qti.hardware.perf@2.2 \
+    vendor.qti.hardware.perf@2.2.vendor \
+    vendor.qti.hardware.perf@2.3 \
     vendor.qti.hardware.servicetracker@1.2.vendor
 
 # Only copy task_profiles.json for 5.4 targets.
